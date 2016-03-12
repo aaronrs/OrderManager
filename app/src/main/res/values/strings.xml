@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Customer Management</string>
+    <string name="alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_add_contact">Add Contact</string>
+    <string name="menu_edit_contact">Edit Contact</string>
+    <string name="no_contacts">No Contacts found</string>
+    <string name="search_match_other">Matches Other Field</string>
+</resources>
