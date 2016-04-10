@@ -12,7 +12,7 @@ public class QueryHelper {
 
     public static final String PRODUCTS_FILTER_QUERY =
             "SELECT " + BaseColumns._ID + ", " + ProductsTable.PRODUCT_NAME
-                    + " FROM " + ProductsTable.PRODUCTS_TABLE_NAME
+                    + " FROM " + ProductsTable.TABLE_NAME
                     + " WHERE " + ProductsTable.PRODUCT_NAME + "%s"
                     + " ORDER BY " + ProductsTable.PRODUCT_NAME;
 
@@ -32,4 +32,21 @@ public class QueryHelper {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DBHelper.DB_DATE_FORMAT);
         return String.format(ORDERS_FILTER_QUERY, customerName, dateFormat.format(orderDate));
     }
+
+    public static final String ORDERS_QUERY =
+            "SELECT " + BaseColumns._ID + ", "
+                    + OrdersTable.CUSTOMER_NAME + ", "
+                    + OrdersTable.ORDER_DATE + ", "
+                    + OrdersTable.INVOICE_NO + ", "
+                    + OrdersTable.PRODUCT_NAME + ", "
+                    + OrdersTable.PRODUCT_BATCH + ", "
+                    + OrdersTable.PRODUCT_QUANTITY + ", "
+                    + OrdersTable.PRODUCT_PRICE + ", "
+                    + OrdersTable.DELIVERY_DATE
+                    + " FROM " + OrdersTable.TABLE_NAME;
+
+    public static String getOrdersQuery() {
+        return ORDERS_QUERY;
+    }
+
 }

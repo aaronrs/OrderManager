@@ -18,7 +18,7 @@ public class ProductsListAdapter extends SimpleCursorAdapter {
         setFilterQueryProvider(
                 new FilterQueryProvider() {
                     public Cursor runQuery(CharSequence str) {
-                        return str == null ? null : ((NewOrderFragment.ProductDataCallback) activity).getProductCursor(str.toString());
+                        return str == null ? null : ((NewOrderDialog.ProductDataCallback) activity).getProductCursor(str.toString());
                     }
                 }
         );

@@ -28,12 +28,12 @@ public class NewOrderFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AutoCompleteTextView productsSpinner = (AutoCompleteTextView) getActivity().findViewById(R.id.productsDropdown);
+        AutoCompleteTextView productsSpinner = (AutoCompleteTextView) getActivity().findViewById(R.id.new_order_product);
         productsSpinner.setAdapter(new ProductsListAdapter(getActivity()));
 
-        priceEditText = (TextView) getActivity().findViewById(R.id.priceEditText);
-        quantityView = (TextView) getActivity().findViewById(R.id.quantityEditText);
-        cost = (TextView) getActivity().findViewById(R.id.costEditText);
+        priceEditText = (TextView) getActivity().findViewById(R.id.new_order_price);
+        quantityView = (TextView) getActivity().findViewById(R.id.new_order_quantity);
+        cost = (TextView) getActivity().findViewById(R.id.new_order_cost);
 
 
         View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
@@ -69,7 +69,7 @@ public class NewOrderFragment extends Fragment {
     }
 
     private void listOrders() {
-        ListView lineItems = (ListView) getActivity().findViewById(R.id.lineItemsListView);
+        TextView lineItems = (TextView) getActivity().findViewById(R.id.contactName);
         String[] from = {OrdersTable.PRODUCT_NAME};
         int[] to = {android.R.id.text1};
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, null, from, to, 0);
@@ -78,6 +78,6 @@ public class NewOrderFragment extends Fragment {
                 return str == null ? null : ((ProductDataCallback) getActivity()).getProductCursor(str.toString());
             } });
 
-        lineItems.setAdapter(adapter);
+//        lineItems.setAdapter(adapter);
     }
 }

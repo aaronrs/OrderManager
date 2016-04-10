@@ -23,8 +23,8 @@ public class CMSDataProvider extends ContentProvider {
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        uriMatcher.addURI(AUTHORITY, ProductsTable.PRODUCTS_TABLE_NAME, PRODUCTS);
-        uriMatcher.addURI(AUTHORITY, ProductsTable.PRODUCTS_TABLE_NAME + "/#", PRODUCTS_ID);
+        uriMatcher.addURI(AUTHORITY, ProductsTable.TABLE_NAME, PRODUCTS);
+        uriMatcher.addURI(AUTHORITY, ProductsTable.TABLE_NAME + "/#", PRODUCTS_ID);
     }
 
     public static Uri getUri(String table) {
@@ -49,10 +49,10 @@ public class CMSDataProvider extends ContentProvider {
         switch (uriMatcher.match(uri)) {
             case PRODUCTS:
 
-                table = ProductsTable.PRODUCTS_TABLE_NAME;
+                table = ProductsTable.TABLE_NAME;
                 break;
             case PRODUCTS_ID:
-                table = ProductsTable.PRODUCTS_TABLE_NAME;
+                table = ProductsTable.TABLE_NAME;
                 selection = selection + "_ID = " + uri.getLastPathSegment();
                 break;
             default:

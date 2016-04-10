@@ -1,5 +1,7 @@
 package net.astechdesign.cms.model;
 
+import android.net.Uri;
+
 import java.util.Date;
 
 public class Order {
@@ -22,5 +24,15 @@ public class Order {
         this.price = price;
         this.deliveryDate = deliveryDate;
         this.cost = cost;
+    }
+
+    public static class Builder {
+        public Builder withCustomer(String customer) {
+            return null;
+        }
+
+        public Order build() {
+            return null;
+        }
     }
 }

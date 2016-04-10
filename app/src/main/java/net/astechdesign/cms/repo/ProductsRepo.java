@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import net.astechdesign.cms.database.DBHelper;
 
-import static net.astechdesign.cms.database.tables.ProductsTable.PRODUCTS_TABLE_NAME;
+import static net.astechdesign.cms.database.tables.ProductsTable.TABLE_NAME;
 import static net.astechdesign.cms.database.tables.ProductsTable.PRODUCT_NAME;
 
 public class ProductsRepo {
@@ -18,6 +18,6 @@ public class ProductsRepo {
 
     public Cursor getProducts() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        return db.rawQuery("SELECT " + PRODUCT_NAME + " FROM " + PRODUCTS_TABLE_NAME + " ORDER BY " + PRODUCT_NAME, null);
+        return db.rawQuery("SELECT " + PRODUCT_NAME + " FROM " + TABLE_NAME + " ORDER BY " + PRODUCT_NAME, null);
     }
 }

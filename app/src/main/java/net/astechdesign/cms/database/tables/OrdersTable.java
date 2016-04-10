@@ -1,6 +1,7 @@
 package net.astechdesign.cms.database.tables;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import net.astechdesign.cms.database.DBHelper;
@@ -32,9 +33,13 @@ public class OrdersTable {
                 PRODUCT_BATCH + " TEXT, " +
                 PRODUCT_QUANTITY + " NUMBER, " +
                 PRODUCT_PRICE + " NUMBER, " +
-                DELIVERY_DATE + " DATE, " +
+                DELIVERY_DATE + " DATE" +
                 ")";
-        db.execSQL(query);
+        try {
+            db.execSQL(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initialise(db);
     }
 
@@ -43,6 +48,7 @@ public class OrdersTable {
 
     private static void initialise(SQLiteDatabase db) {
         db.insert(TABLE_NAME, null, getInsertValues("Tom Thumb", new Date(),"inv01", "Product X", "batch", 1, 10f, new Date()));
+        db.insert(TABLE_NAME, null,  getInsertValues("Tom", new Date(), "inv01", "prod01", "batch01", 1, 20.0f, new Date()));
     }
 
     public static ContentValues getInsertValues(String customer, Date orderDate, String invoice, String product, String batch, int quantity, float price, Date deliveryDate) {

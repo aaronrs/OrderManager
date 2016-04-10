@@ -16,14 +16,14 @@ import static android.provider.BaseColumns._ID;
 public class ProductsTable {
 
     public static final String PRODUCTS_TABLE_PREFIX = "p";
-    public static final String PRODUCTS_TABLE_NAME = "products";
+    public static final String TABLE_NAME = "products";
     public static final String PRODUCT_NAME = "name";
     public static final String PRODUCT_PRICE = "price";
 
     public static final String PRODUCT_DESCRIPTION = "description";
 
     public static void createProductsTable(SQLiteDatabase db, AssetManager assets) {
-        String query = "CREATE TABLE " + PRODUCTS_TABLE_NAME + " (" +
+        String query = "CREATE TABLE " + TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 PRODUCT_NAME + " TEXT, " +
                 PRODUCT_DESCRIPTION + " TEXT, " +
@@ -49,7 +49,7 @@ public class ProductsTable {
             while ((line = br.readLine()) != null) {
                 String[] productInfo = line.split("\\|");
                 if (! previous.equals(productInfo[2])) {
-                    db.insert(ProductsTable.PRODUCTS_TABLE_NAME, null, getInsertValues(productInfo[2], "", 0));
+                    db.insert(ProductsTable.TABLE_NAME, null, getInsertValues(productInfo[2], "", 0));
                     previous = productInfo[2];
                 }
             }

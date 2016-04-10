@@ -52,8 +52,8 @@ public class OrderRepository {
     }
 
     public void saveOrder(int customerId, String invoice, Date date, String productName, String batch, int quantity, float price) {
-        ContentValues values = getInsertValues(customerId, invoice, date, productName, batch, quantity, price, price * quantity);
-        SQLiteDatabase wDB = dbHelper.getWritableDatabase();
-        wDB.insert(ProductsTable.PRODUCTS_TABLE_NAME, null, values);
+//        ContentValues values = getInsertValues(customerId, invoice, date, productName, batch, quantity, price, price * quantity);
+//        SQLiteDatabase wDB = dbHelper.getWritableDatabase();
+//        wDB.insert(ProductsTable.PRODUCTS_TABLE_NAME, null, values);
     }
 }

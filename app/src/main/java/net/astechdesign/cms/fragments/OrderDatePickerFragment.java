@@ -30,7 +30,7 @@ public class OrderDatePickerFragment extends DialogFragment implements DatePicke
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
-        TextView deliveryDate = (TextView) getActivity().findViewById(R.id.deliveryDate);
+        TextView deliveryDate = (TextView) getActivity().findViewById(R.id.new_order_deliveryDate);
         deliveryDate.setText(dateFormat.format(new GregorianCalendar(year, month, day).getTime()));
     }
 }

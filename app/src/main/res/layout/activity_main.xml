@@ -47,7 +47,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:singleLine="true"
                 android:gravity="center_vertical"
-                android:layout_weight="0.23" />
+                android:layout_weight="0.23"
+                android:onClick="selectContact"/>
 
             <TextView
                 android:id="@+id/contactTelephone"
