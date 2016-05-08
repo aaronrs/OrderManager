@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CustomerActivity"></activity>
-        <activity android:name=".OrderActivity"></activity>
-        <activity android:name=".NewOrderActivity"></activity>
+        <!--<activity android:name=".CustomerActivity"></activity>-->
+        <!--<activity android:name=".OrderActivity"></activity>-->
+        <!--<activity android:name=".NewOrderActivity"></activity>-->
         <provider
             android:authorities="net.astechdesign.cms.database.provider"
             android:name="net.astechdesign.cms.database.providers.CMSDataProvider"/>

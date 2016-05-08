@@ -13,10 +13,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class OrderManager {
+public class InvoiceManager {
     private DBHelper dbHelper;
 
-    public OrderManager(DBHelper dbHelper) {
+    public InvoiceManager(DBHelper dbHelper) {
         this.dbHelper = dbHelper;
     }
 

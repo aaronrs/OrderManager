@@ -168,7 +168,7 @@
             style="?android:attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:onClick="saveOrder"
+            android:onClick="addOrder"
             android:layout_gravity="center"
             android:text="Add"/>
 
@@ -177,7 +177,7 @@
             style="?android:attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:onClick="saveOrder"
+            android:onClick="cancelOrder"
             android:layout_gravity="center"
             android:text="Cancel"/>
 

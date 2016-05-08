@@ -30,15 +30,6 @@ public class NewOrderDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.new_order_view, container, false);
 
-        // Watch for button clicks.
-        Button button = (Button)v.findViewById(R.id.button3);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // When button is clicked, call up to owning activity.
-                ((CMSActivity)getActivity()).addOrder();
-            }
-        });
-
         AutoCompleteTextView productsText = (AutoCompleteTextView)v.findViewById(R.id.new_order_product);
         productsText.setAdapter(new ProductsListAdapter(getActivity()));
 

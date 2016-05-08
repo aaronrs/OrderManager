@@ -1,8 +1,8 @@
 package net.astechdesign.cms.database.tables;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.res.AssetManager;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
@@ -13,33 +13,42 @@ import java.io.InputStreamReader;
 
 import static android.provider.BaseColumns._ID;
 
-public class ProductsTable {
+public class ProductsTable implements CMSTable {
 
-    public static final String PRODUCTS_TABLE_PREFIX = "p";
-    public static final String TABLE_NAME = "products";
     public static final String PRODUCT_NAME = "name";
     public static final String PRODUCT_PRICE = "price";
 
     public static final String PRODUCT_DESCRIPTION = "description";
+    private final AssetManager assets;
 
-    public static void createProductsTable(SQLiteDatabase db, AssetManager assets) {
-        String query = "CREATE TABLE " + TABLE_NAME + " (" +
+    public ProductsTable(Context context) {
+        assets = context.getAssets();
+    }
+
+    @Override
+    public String getTableName() {
+        return "products";
+    }
+
+    @Override
+    public void create(SQLiteDatabase db) {
+        String query = "CREATE TABLE " + getTableName() + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 PRODUCT_NAME + " TEXT, " +
                 PRODUCT_DESCRIPTION + " TEXT, " +
                 PRODUCT_PRICE + " NUMBER " +
                 ")";
         db.execSQL(query);
-
-        initialise(db, assets);
+        initialise(db);
     }
 
-    public static void upgradeProductsTable(SQLiteDatabase db, int oldVersion, int newVersion) {
+    @Override
+    public void upgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
 
-    private static void initialise(SQLiteDatabase db, AssetManager assets) {
-        InputStream input = null;
+    private void initialise(SQLiteDatabase db) {
+        InputStream input;
         try {
             input = assets.open("db/products.sql");
             if (input == null) return;
@@ -49,7 +58,7 @@ public class ProductsTable {
             while ((line = br.readLine()) != null) {
                 String[] productInfo = line.split("\\|");
                 if (! previous.equals(productInfo[2])) {
-                    db.insert(ProductsTable.TABLE_NAME, null, getInsertValues(productInfo[2], "", 0));
+                    db.insert(getTableName(), null, getInsertValues(productInfo[2], "", 0));
                     previous = productInfo[2];
                 }
             }
@@ -65,4 +74,16 @@ public class ProductsTable {
         values.put(PRODUCT_PRICE, price);
         return values;
     }
+
+    public String getProductsFilterQuery(String filter) {
+        String like = " LIKE '" + filter + "%' OR "+ ProductsTable.PRODUCT_NAME + "  LIKE '% " + filter + "%'";
+        return String.format(PRODUCTS_FILTER_QUERY, like);
+    }
+
+    public final String PRODUCTS_FILTER_QUERY =
+            "SELECT " + BaseColumns._ID + ", " + PRODUCT_NAME
+                    + " FROM " + getTableName()
+                    + " WHERE " + PRODUCT_NAME + "%s"
+                    + " ORDER BY " + PRODUCT_NAME;
+
 }

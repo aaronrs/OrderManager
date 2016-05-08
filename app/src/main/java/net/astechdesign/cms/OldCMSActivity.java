@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import net.astechdesign.cms.database.DBHelper;
+import net.astechdesign.cms.database.tables.CMSTable;
 import net.astechdesign.cms.fragments.ContactsListFragment;
 import net.astechdesign.cms.fragments.NewOrderFragment;
 import net.astechdesign.cms.fragments.OrderDatePickerFragment;
@@ -155,12 +156,6 @@ public class OldCMSActivity extends Activity implements ContactsListFragment.OnC
 
     }
 
-    public void showDatePickerDialog(View view) {
-        DialogFragment newFragment = new OrderDatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
-
-
-    }
 
     public void newOrders(View view) {
         Intent intent = new Intent(this, NewOrderFragment.class);
@@ -178,7 +173,7 @@ public class OldCMSActivity extends Activity implements ContactsListFragment.OnC
         String quantity = getEntryText(R.id.new_order_quantity);
         String deliveryDate = getEntryText(R.id.new_order_deliveryDate);
 
-        dbHelper.saveOrder(contactName, new Date(), invoice, product, batch, convertInt(quantity), convertFloat(price), convertDate(deliveryDate));
+//        dbHelper.saveOrder(contactName, new Date(), invoice, product, batch, convertInt(quantity), convertFloat(price), convertDate(deliveryDate));
     }
 
     private String getEntryText(int viewName) {
@@ -195,7 +190,7 @@ public class OldCMSActivity extends Activity implements ContactsListFragment.OnC
 
     private Date convertDate(String deliveryDate) {
         try {
-            return new SimpleDateFormat(DBHelper.DB_DATE_FORMAT).parse(deliveryDate);
+            return new SimpleDateFormat(CMSTable.DB_DATE_FORMAT).parse(deliveryDate);
         } catch (ParseException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

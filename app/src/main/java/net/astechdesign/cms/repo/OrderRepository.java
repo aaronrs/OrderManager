@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import net.astechdesign.cms.database.DBHelper;
 import net.astechdesign.cms.database.tables.OrdersTable;
-import net.astechdesign.cms.database.tables.ProductsTable;
 import net.astechdesign.cms.model.Customer;
 import net.astechdesign.cms.model.Order;
 
@@ -14,8 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static net.astechdesign.cms.database.tables.OrdersTable.TABLE_NAME;
-import static net.astechdesign.cms.database.tables.OrdersTable.getInsertValues;
+//import static net.astechdesign.cms.database.tables.OrdersTable.TABLE_NAME;
 
 public class OrderRepository {
 
@@ -27,8 +25,8 @@ public class OrderRepository {
 
     public Cursor get(Customer customer) {
         SQLiteDatabase rDB = dbHelper.getReadableDatabase();
-        return rDB.query(TABLE_NAME, null, OrdersTable.CUSTOMER_NAME + " = " + customer.getId() , null, null, null, null);
-//        return rDB.query("table", new String[]{"columns"}, "selection", new String[]{"selectionArgs"}, "groupBy", "having", "orderBy", "limit");
+//        return rDB.query(TABLE_NAME, null, OrdersTable.CUSTOMER_NAME + " = " + customer.getId() , null, null, null, null);
+        return rDB.query("table", new String[]{"columns"}, "selection", new String[]{"selectionArgs"}, "groupBy", "having", "orderBy", "limit");
     }
 
     public void insert() {
