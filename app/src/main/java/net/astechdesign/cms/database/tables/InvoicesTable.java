@@ -99,6 +99,19 @@ public class InvoicesTable implements CMSTable {
     }
 
     public final String GET_INVOICES =
+            "SELECT DISTINCT " + BaseColumns._ID + ", "
+                    + INVOICE_NUMBER + ", "
+                    + CUSTOMER_NAME + ", "
+                    + ORDER_DATE
+                    + " FROM " + getTableName()
+                    + " GROUP BY "
+                    + INVOICE_NUMBER + ", "
+                    + CUSTOMER_NAME + ", "
+                    + ORDER_DATE
+            ;
+
+
+    public final String GET_INVOICE_DETAILS =
             "SELECT " + BaseColumns._ID + ", "
                     + CUSTOMER_NAME + ", "
                     + ORDER_DATE + ", "

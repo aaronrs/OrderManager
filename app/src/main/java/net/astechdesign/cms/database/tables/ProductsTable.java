@@ -13,7 +13,9 @@ import java.io.InputStreamReader;
 
 import static android.provider.BaseColumns._ID;
 
-public class ProductsTable implements CMSTable {
+    public class ProductsTable implements CMSTable {
+
+    private static final String TABLE_NAME = "products";
 
     public static final String PRODUCT_NAME = "name";
     public static final String PRODUCT_PRICE = "price";
@@ -27,7 +29,7 @@ public class ProductsTable implements CMSTable {
 
     @Override
     public String getTableName() {
-        return "products";
+        return TABLE_NAME;
     }
 
     @Override

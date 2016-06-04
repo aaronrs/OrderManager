@@ -1,11 +1,15 @@
 package net.astechdesign.cms.database;
 
 import android.content.Context;
+import android.content.CursorLoader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
+import net.astechdesign.cms.CMSActivity;
 import net.astechdesign.cms.database.tables.CMSTable;
+import net.astechdesign.cms.database.tables.CustomersTable;
 import net.astechdesign.cms.database.tables.InvoicesTable;
 import net.astechdesign.cms.database.tables.ProductsTable;
 
@@ -16,20 +20,21 @@ import java.util.List;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "orders.db";
+    private static final String DATABASE_NAME = "orders";
 
-    private Context context;
     private final List<CMSTable> tables = new ArrayList<>();
     private final InvoicesTable invoicesTable;
     private final ProductsTable productsTable;
+    private final CustomersTable customersTable;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context;
         invoicesTable = new InvoicesTable(context);
         productsTable = new ProductsTable(context);
+        customersTable = new CustomersTable();
         tables.add(invoicesTable);
         tables.add(productsTable);
+        tables.add(customersTable);
         resetDB();
     }
 
@@ -67,5 +72,29 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ProductsTable getProductsTable() {
         return productsTable;
+    }
+
+    public Cursor getInvoicesCursor() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery(invoicesTable.getInvoicesQuery(), null);
+    }
+
+    static final String[] CUSTOMER_SUMMARY_PROJECTION = new String[] {
+                CustomersTable.CONTACT_ID,
+                CustomersTable.CUSTOMER_NAME,
+                CustomersTable.CUSTOMER_ADDRESS,
+                CustomersTable.CUSTOMER_POSTCODE,
+                CustomersTable.CUSTOMER_PHONE,
+                CustomersTable.CUSTOMER_EMAIL
+            };
+
+    public CursorLoader getCustomerLoader(Context context) {
+        return new CursorLoader(
+                context,
+                Uri.EMPTY,
+                CUSTOMER_SUMMARY_PROJECTION,
+                null,
+                null,
+                CustomersTable.CUSTOMER_NAME + " COLLATE LOCALIZED ASC");
     }
 }

@@ -1,13 +1,21 @@
 package net.astechdesign.cms.database.tables;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import static android.provider.BaseColumns._ID;
 
-public class CustomersTable {
+public class CustomersTable implements CMSTable {
 
-    public static final String TABLE_NAME = "customers";
+    private static final String TABLE_NAME = "customers";
+
     public static final String CONTACT_ID = "contact_id";
     public static final String CUSTOMER_NAME = "name";
     public static final String CUSTOMER_ADDRESS = "address";
@@ -15,7 +23,13 @@ public class CustomersTable {
     public static final String CUSTOMER_EMAIL = "email";
     public static final String CUSTOMER_PHONE = "phone";
 
-    public static void createCustomersTable(SQLiteDatabase db) {
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
+
+    @Override
+    public void create(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 CONTACT_ID + " INTEGER, " +
@@ -23,20 +37,30 @@ public class CustomersTable {
                 CUSTOMER_ADDRESS + " INTEGER, " +
                 CUSTOMER_POSTCODE + " INTEGER, " +
                 CUSTOMER_EMAIL + " INTEGER, " +
-                CUSTOMER_PHONE + " INTEGER, " +
+                CUSTOMER_PHONE + " INTEGER" +
                 ")";
         db.execSQL(query);
         initialise(db);
     }
 
-    public static void upgradeCustomersTable(SQLiteDatabase db, int oldVersion, int newVersion) {
+    @Override
+    public void upgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
 
-    private static void initialise(SQLiteDatabase db) {
+    private void initialise(SQLiteDatabase db) {
+        for (int i=1; i < 100; i++) {
+            db.insert(TABLE_NAME, null,
+                    getInsertValues(i,
+                    String.format("Person %03d", i),
+                    String.format("%d Street, Town", i),
+                    String.format("AA%d %dAA", i,i),
+                    String.format("person%03d@gmail.com", i,i),
+                    String.format("07700000%03d", i)));
+        }
     }
 
-    private static ContentValues insert(int contactId, String name, String address, String postcode, String email, String phone) {
+    private ContentValues getInsertValues(int contactId, String name, String address, String postcode, String email, String phone) {
         ContentValues values = new ContentValues();
         values.put(CONTACT_ID, contactId);
         values.put(CUSTOMER_NAME, name);

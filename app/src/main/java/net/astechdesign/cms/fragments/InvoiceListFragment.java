@@ -1,65 +1,66 @@
 package net.astechdesign.cms.fragments;
 
-import android.app.Fragment;
-import android.content.Context;
+import android.app.ListFragment;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
-import net.astechdesign.cms.CMSActivity;
 import net.astechdesign.cms.R;
-import net.astechdesign.cms.model.Order;
+import net.astechdesign.cms.database.tables.InvoicesTable;
 
-public class InvoiceListFragment extends Fragment {
+public class InvoiceListFragment extends ListFragment {
 
-    private OnListFragmentInteractionListener mListener;
+    private Cursor invoicesCursor;
 
     public InvoiceListFragment() {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        invoicesCursor.moveToPosition(position);
+        Toast.makeText(getActivity(), invoicesCursor.getString(invoicesCursor.getColumnIndex(InvoicesTable.CUSTOMER_NAME)), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_order_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
-            Cursor orderCursor = ((CMSActivity)getActivity()).getInvoiceCursor();
-            recyclerView.setAdapter(new MyInvoiceRecyclerViewAdapter(orderCursor, mListener));
-        }
-        return view;
+        String[] from = {InvoicesTable.INVOICE_NUMBER, InvoicesTable.CUSTOMER_NAME, InvoicesTable.ORDER_DATE};
+        int[] to = {R.id.invoice_id, R.id.customer_name, R.id.order_date};
+        invoicesCursor = ((OnLoadFragment) getActivity()).getInvoicesCursor();
+        SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.invoice, invoicesCursor, from, to, 0);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+//                inflater.getContext(), android.R.layout.simple_list_item_1,
+//                numbers_text);
+        setListAdapter(cursorAdapter);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
+
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        return getListView();
+//    }
+
+//    @Override
+//    public void onViewCreated(View view, Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//
+//        String[] from = {InvoicesTable.INVOICE_NUMBER, InvoicesTable.CUSTOMER_NAME, InvoicesTable.ORDER_DATE};
+//        int[] to = {R.id.invoice_id, R.id.customer_name, R.id.order_date};
+//        SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.invoice, ((OnLoadFragment)getActivity()).getInvoicesCursor(), from, to, 0);
+//        ListView invoicesListView = getListView();
+//        invoicesListView.setAdapter(cursorAdapter);
+//    }
+
+    public interface OnLoadFragment {
+        Cursor getInvoicesCursor();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Order order);
-    }
 }

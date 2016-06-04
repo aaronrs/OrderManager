@@ -4,12 +4,12 @@ import android.database.sqlite.SQLiteDatabase;
 
 public interface CMSTable {
 
-    public static final String DB_DATE_FORMAT = "yyyy-MM-dd";
-    public static final String DB_TIME_FORMAT = "HH:mm:ss";
+    String DB_DATE_FORMAT = "yyyy-MM-dd";
+    String DB_TIME_FORMAT = "HH:mm:ss";
 
-    public String getTableName();
+    String getTableName();
 
-    public void create(SQLiteDatabase db);
-    public void upgrade(SQLiteDatabase db, int oldVersion, int newVersion);
+    void create(SQLiteDatabase db);
+    void upgrade(SQLiteDatabase db, int oldVersion, int newVersion);
 
 }
