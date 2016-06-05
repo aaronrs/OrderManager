@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import net.astechdesign.cms.database.DBHelper;
+import net.astechdesign.cms.database.tables.InvoicesTable;
 import net.astechdesign.cms.fragments.InvoiceListFragment;
 
-public class CMSActivity extends Activity implements InvoiceListFragment.OnLoadFragment {
+public class CMSActivity extends Activity implements InvoiceListFragment.InvoicesFragmentActions {
 
     private  DBHelper dbHelper;
     private InvoiceListFragment invoiceListFragment;
@@ -34,6 +36,13 @@ public class CMSActivity extends Activity implements InvoiceListFragment.OnLoadF
     @Override
     public Cursor getInvoicesCursor() {
         return dbHelper.getInvoicesCursor();
+    }
+
+    @Override
+    public void showInvoice(int position) {
+        Cursor invoicesCursor = getInvoicesCursor();
+        invoicesCursor.moveToPosition(position);
+        Toast.makeText(this, invoicesCursor.getString(invoicesCursor.getColumnIndex(InvoicesTable.CUSTOMER_NAME)), Toast.LENGTH_SHORT).show();
     }
 }
 
