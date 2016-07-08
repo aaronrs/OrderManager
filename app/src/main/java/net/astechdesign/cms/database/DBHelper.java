@@ -74,9 +74,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return productsTable;
     }
 
-    public Cursor getInvoicesCursor() {
+    public Cursor getInvoicesCursor(String name) {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery(invoicesTable.getInvoicesQuery(), null);
+        return db.rawQuery(invoicesTable.getInvoicesQuery(name), null);
     }
 
     static final String[] CUSTOMER_SUMMARY_PROJECTION = new String[] {

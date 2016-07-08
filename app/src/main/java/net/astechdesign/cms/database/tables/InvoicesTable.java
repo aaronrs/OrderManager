@@ -98,12 +98,32 @@ public class InvoicesTable implements CMSTable {
         return GET_INVOICES;
     }
 
+    public String getInvoicesQuery(String name) {
+        if (name == null) {
+            return GET_INVOICES;
+        }
+        return String.format(GET_INVOICES_BY_NAME, name);
+    }
+
     public final String GET_INVOICES =
             "SELECT DISTINCT " + BaseColumns._ID + ", "
                     + INVOICE_NUMBER + ", "
                     + CUSTOMER_NAME + ", "
                     + ORDER_DATE
                     + " FROM " + getTableName()
+                    + " GROUP BY "
+                    + INVOICE_NUMBER + ", "
+                    + CUSTOMER_NAME + ", "
+                    + ORDER_DATE
+            ;
+
+    public final String GET_INVOICES_BY_NAME =
+            "SELECT DISTINCT " + BaseColumns._ID + ", "
+                    + INVOICE_NUMBER + ", "
+                    + CUSTOMER_NAME + ", "
+                    + ORDER_DATE
+                    + " FROM " + getTableName()
+                    + " WHERE " + CUSTOMER_NAME + "='%s'"
                     + " GROUP BY "
                     + INVOICE_NUMBER + ", "
                     + CUSTOMER_NAME + ", "

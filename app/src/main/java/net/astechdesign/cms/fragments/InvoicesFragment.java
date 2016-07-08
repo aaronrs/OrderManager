@@ -1,27 +1,16 @@
 package net.astechdesign.cms.fragments;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import net.astechdesign.cms.R;
-import net.astechdesign.cms.fragments.dummy.DummyContent;
-import net.astechdesign.cms.fragments.dummy.DummyContent.DummyItem;
+import net.astechdesign.cms.model.Invoice;
 
-import java.util.List;
-
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class InvoicesFragment extends Fragment {
 
     // TODO: Customize parameter argument names
@@ -81,6 +70,10 @@ public class InvoicesFragment extends Fragment {
         mListener = null;
     }
 
+    public void setInvoice(int invoice) {
+        ((TextView)getActivity().findViewById(R.id.customer_name)).setText(invoice);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -93,6 +86,6 @@ public class InvoicesFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Invoice invoice);
     }
 }

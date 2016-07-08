@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
@@ -24,7 +23,9 @@ public class InvoiceListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         invoicesCursor.moveToPosition(position);
-        Toast.makeText(getActivity(), invoicesCursor.getString(invoicesCursor.getColumnIndex(InvoicesTable.CUSTOMER_NAME)), Toast.LENGTH_SHORT).show();
+        int invoiceNumber = invoicesCursor.getInt(invoicesCursor.getColumnIndex(InvoicesTable.INVOICE_NUMBER));
+        Toast.makeText(getActivity(), Integer.toString(invoiceNumber), Toast.LENGTH_SHORT).show();
+        ((InvoiceListActions) getActivity()).invoiceSelected(invoiceNumber);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class InvoiceListFragment extends ListFragment {
                              Bundle savedInstanceState) {
         String[] from = {InvoicesTable.INVOICE_NUMBER, InvoicesTable.CUSTOMER_NAME, InvoicesTable.ORDER_DATE};
         int[] to = {R.id.invoice_id, R.id.customer_name, R.id.order_date};
-        invoicesCursor = ((OnLoadFragment) getActivity()).getInvoicesCursor();
+        invoicesCursor = ((InvoiceListActions) getActivity()).getInvoicesCursor();
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.invoice, invoicesCursor, from, to, 0);
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 //                inflater.getContext(), android.R.layout.simple_list_item_1,
@@ -59,8 +60,9 @@ public class InvoiceListFragment extends ListFragment {
 //        invoicesListView.setAdapter(cursorAdapter);
 //    }
 
-    public interface OnLoadFragment {
+    public interface InvoiceListActions {
         Cursor getInvoicesCursor();
+        void invoiceSelected(int invoice);
     }
 
 }
