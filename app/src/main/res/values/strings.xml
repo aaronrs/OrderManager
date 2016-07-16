@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Customer Management</string>
+    <string name="app_name">Order Manager</string>
     <string name="alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="menu_search">Search</string>
     <string name="menu_add_contact">Add Contact</string>
